@@ -1,8 +1,14 @@
 import handler.ProblemHandler
+import mu.KotlinLogging
+import org.apache.logging.log4j.Level
+import org.apache.logging.log4j.core.config.Configurator
 import java.lang.NumberFormatException
 import kotlin.system.exitProcess
 
+val logger = KotlinLogging.logger { }
+
 fun main(args: Array<String>) {
+    Configurator.setRootLevel(Level.INFO)
     val number = parseArguments(args) ?: exitProcess(1)
     val handler = ProblemHandler(number)
     handler.execute()
@@ -14,10 +20,10 @@ fun parseArguments(args: Array<String>): Short? {
         1 -> try {
             args[0].toShort()
         } catch (e: NumberFormatException) {
-            println("Argument isn't a number")
+            logger.info { "Argument isn't a number" }
             null
         }
-        else -> println("Must pass a number as the problem").let { null }
+        else -> logger.info { "Must pass a number as the problem" }.let { null }
     }
 }
 

@@ -1,5 +1,6 @@
 package handler
 
+import mu.KotlinLogging
 import problem.*
 import kotlin.reflect.full.createInstance
 
@@ -7,6 +8,7 @@ import kotlin.reflect.full.createInstance
 class ProblemHandler(number: Short) {
 
     companion object {
+        private val logger = KotlinLogging.logger { }
         private val problems = listOf(Problem1::class, Problem2::class, Problem3::class)
     }
 
@@ -21,16 +23,16 @@ class ProblemHandler(number: Short) {
     }
 
     fun execute() {
-        println("Solving problem \"${problem.problemName}\"")
+        logger.info { "Solving problem \"${problem.problemName}\"" }
+
         val start = System.currentTimeMillis()
-
         val result = problem.solve()
-
         val end = System.currentTimeMillis()
         val time = end - start
-        println("Problem \"${problem.problemName}\" solved")
-        println("The result given was $result")
-        println("It took $time milliseconds to be solved")
+
+        logger.info { "Problem \"${problem.problemName}\" solved" }
+        logger.info { "The result given was $result" }
+        logger.info { "It took $time milliseconds to be solved" }
     }
 
 }
