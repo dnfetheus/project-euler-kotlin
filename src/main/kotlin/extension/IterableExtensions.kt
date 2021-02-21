@@ -12,10 +12,10 @@ inline fun <T, R> Iterable<T>.mapWhile(transform: (T) -> R, condition: (R) -> Bo
     for (item in this) {
         val transformation = transform(item)
 
-        if (condition(transformation))
-            destination.add(transformation)
-        else
-            break
+        when(condition(transformation)) {
+            true -> destination.add(transformation)
+            else -> break
+        }
     }
 
     return destination
