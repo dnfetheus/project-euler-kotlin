@@ -1,25 +1,24 @@
 package handler
 
+import constant.PROBLEMS
 import mu.KotlinLogging
-import problem.*
+import problem.Problem
 import kotlin.reflect.full.createInstance
 
-// TODO: Unsigned short
 class ProblemHandler(number: Short) {
 
     companion object {
         private val logger = KotlinLogging.logger { }
-        private val problems = listOf(Problem1::class, Problem2::class, Problem3::class)
     }
 
     private val problem: Problem<out Any>
 
     init {
-        if (number !in 1..problems.size) {
+        if (number !in 1..PROBLEMS.size) {
             throw Exception("Problem doesn't exist")
         }
 
-        problem = problems[number - 1].createInstance()
+        problem = PROBLEMS[number - 1].createInstance()
     }
 
     fun execute() {
