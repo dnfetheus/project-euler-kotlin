@@ -2,7 +2,6 @@ package problem
 
 import extension.mapWhile
 
-// TODO: Unsigned Int
 class Problem2 : Problem<Int> {
 
     override val problemName = "Even Fibonacci numbers"
@@ -18,13 +17,12 @@ class Problem2 : Problem<Int> {
     fun fibonacciNumber(n: Int): Int {
         var a = 0
         var b = 1
-        var temp: Int
 
         if (n < 1) return a
 
         return (2..n)
             .forEach { _ ->
-                temp = a + b
+                val temp = a + b
                 a = b
                 b = temp
             }

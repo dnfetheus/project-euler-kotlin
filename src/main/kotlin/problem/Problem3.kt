@@ -1,6 +1,5 @@
 package problem
 
-// TODO: Unsigned Long
 class Problem3 : Problem<Long> {
 
     override val problemName = "Largest prime factor"

@@ -1,6 +1,5 @@
 package problem
 
-// TODO: Unsigned Int
 class Problem1 : Problem<Int> {
 
     override val problemName: String = "Multiples of 3 or 5"
