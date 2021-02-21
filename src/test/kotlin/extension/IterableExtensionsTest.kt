@@ -7,8 +7,7 @@ class IterableExtensionsTest {
 
     private val iterable = listOf("Subaru", "DeepFuckingValue", "yee", "Test")
 
-    @Test
-    fun `Is mapWhile accurate`() {
+    @Test fun `Is mapWhile accurate`() {
         val mappedIterable = iterable
             .mapWhile(
                 { it.toUpperCase() },

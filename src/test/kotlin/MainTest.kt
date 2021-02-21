@@ -4,8 +4,7 @@ import kotlin.test.assertNull
 
 class MainTest {
 
-    @Test
-    fun `Is parseArguments not allowing more arguments than needed`() {
+    @Test fun `Is parseArguments not allowing more arguments than needed`() {
         val emptyArgs = emptyArray<String>()
         val fulfilledArgs = arrayOf("Test", "Test")
 
@@ -13,22 +12,19 @@ class MainTest {
         assertNull(parseArguments(fulfilledArgs))
     }
 
-    @Test
-    fun `Is parseArguments not allowing non-number string`() {
-        val args = arrayOf("Test")
+    @Test fun `Is parseArguments not allowing non-number string`() {
+        val alphanumericArgs = arrayOf("Test")
 
-        assertNull(parseArguments(args))
+        assertNull(parseArguments(alphanumericArgs))
     }
 
-    @Test
-    fun `Is parseArguments returning number`() {
-        val args = arrayOf("1")
+    @Test fun `Is parseArguments returning number`() {
+        val numericArgs = arrayOf("1")
 
-        assertEquals(1, parseArguments(args)!!)
+        assertEquals(1, parseArguments(numericArgs)!!)
     }
 
-    @Test
-    fun `Is program running`() {
+    @Test fun `Is program running`() {
         main(arrayOf("1"))
     }
 

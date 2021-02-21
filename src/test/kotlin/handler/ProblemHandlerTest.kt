@@ -6,15 +6,13 @@ import kotlin.test.Test
 
 class ProblemHandlerTest {
 
-    @Test
-    fun `Is constructor handling error`() {
+    @Test fun `Is constructor handling error`() {
         val wrongNumber: Short = 0
 
         assertThrows<Exception> { ProblemHandler(wrongNumber) }
     }
 
-    @Test
-    fun `Is handler solving problem`() {
+    @Test fun `Is handler solving problem`() {
         val rightNumber: Short = 1
 
         assertDoesNotThrow { ProblemHandler(rightNumber).also { it.execute() } }
