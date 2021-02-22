@@ -4,7 +4,7 @@ import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.core.config.Configurator
 import kotlin.system.exitProcess
 
-val logger = KotlinLogging.logger { }
+private val logger = KotlinLogging.logger {}
 
 fun main(args: Array<String>) {
     Configurator.setRootLevel(Level.INFO)
@@ -14,10 +14,7 @@ fun main(args: Array<String>) {
     )
 }
 
-fun parseArguments(args: Array<String>): Result<Short> {
-    return when(args.size) {
-        1 -> runCatching { args[0].toShort() }
-        else -> return Result.failure(Exception("No argument given"))
-    }
+fun parseArguments(args: Array<String>): Result<Short> = when (args.size) {
+    1 -> runCatching { args[0].toShort() }
+    else -> Result.failure(Exception("No argument given"))
 }
-
