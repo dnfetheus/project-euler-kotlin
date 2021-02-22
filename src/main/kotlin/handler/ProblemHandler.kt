@@ -5,13 +5,11 @@ import mu.KotlinLogging
 import problem.Problem
 import kotlin.reflect.full.createInstance
 
+private val logger = KotlinLogging.logger {}
+
 class ProblemHandler(number: Short) {
 
-    companion object {
-        private val logger = KotlinLogging.logger { }
-    }
-
-    private val problem: Problem<out Any>
+    private val problem: Problem<Any>
 
     init {
         if (number !in 1..PROBLEMS.size) {

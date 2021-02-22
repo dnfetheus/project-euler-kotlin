@@ -1,6 +1,6 @@
 package problem
 
-interface Problem<T> {
+interface Problem<out T> {
 
     val problemName: String
 
