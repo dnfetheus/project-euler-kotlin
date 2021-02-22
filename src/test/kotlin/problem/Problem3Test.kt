@@ -12,20 +12,23 @@ class Problem3Test : ProblemTest {
     override val problem = Problem3()
 
     @Test fun `Is isPrime returning true for prime numbers`() {
-        assertTrue(primeNumbers.all { problem.isPrime(it) })
+        assertTrue(primeNumbers.all { Problem3.isPrime(it) })
     }
 
     @Test fun `Is isPrime returning false for non prime numbers`() {
-        assertTrue(nonPrimeNumbers.none { problem.isPrime(it) })
+        assertTrue(nonPrimeNumbers.none { Problem3.isPrime(it) })
     }
 
     @Test fun `Is nextPrime returning the next prime`() {
-        assertEquals(13, problem.nextPrime(12))
+        assertEquals(13, Problem3.nextPrime(12))
     }
 
     @Test fun `Is largestPrimeFactor accurate`() {
-        assertEquals(11, problem.largestPrimeFactor(33))
-        assertEquals(29, problem.largestPrimeFactor(13195))
+        val expectedPrimeFactorsOf33 = listOf<Long>(3, 11)
+        val expectedPrimeFactorsOf13195 = listOf<Long>(5, 7, 13, 29)
+
+        assertEquals(expectedPrimeFactorsOf33, Problem3.primeFactors(33))
+        assertEquals(expectedPrimeFactorsOf13195, Problem3.primeFactors(13195))
     }
 
     @Test override fun `Is problem being solved correctly`() {
