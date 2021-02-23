@@ -1,14 +1,14 @@
 package problem
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.ints.shouldBeExactly
 
-class Problem1Test: ProblemTest {
+class Problem1Test : StringSpec({
 
-    override val problem = Problem1()
+    val problem = Problem1()
 
-    @Test override fun `Is problem being solved correctly`() {
-        assertEquals(233168, problem.solve())
+    "Is problem being solved correctly" {
+        problem.solve() shouldBeExactly 233168
     }
 
-}
+})

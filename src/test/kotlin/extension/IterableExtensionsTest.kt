@@ -1,20 +1,15 @@
 package extension
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.ints.shouldBeExactly
 
-class IterableExtensionsTest {
+class IterableExtensionsTest : StringSpec({
 
-    private val iterable = listOf("Subaru", "DeepFuckingValue", "yee", "Test")
+    val values = listOf("Subaru", "DeepFuckingValue", "yee", "Test")
 
-    @Test fun `Is mapWhile accurate`() {
-        val mappedIterable = iterable
-            .mapWhile(
-                { it.toUpperCase() },
-                { it != "TEST" }
-            )
-
-        assertEquals(3, mappedIterable.size)
+    "Is mapWhile accurate" {
+        values.mapWhile({ it.toUpperCase() }, { it != "TEST" }) shouldHaveSize 3
     }
 
-}
+})

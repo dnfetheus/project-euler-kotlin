@@ -1,31 +1,24 @@
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import io.kotest.assertions.throwables.shouldNotThrowAny
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
-class MainTest {
+class MainTest : StringSpec({
 
-    @Test fun `Is parseArguments not allowing more arguments than needed`() {
-        val emptyArgs = emptyArray<String>()
-        val fulfilledArgs = arrayOf("Test", "Test")
-
-        assertTrue(parseArguments(emptyArgs).isFailure)
-        assertTrue(parseArguments(fulfilledArgs).isFailure)
+    "Is parseArguments not allowing more arguments than needed" {
+        parseArguments(emptyArray()).isFailure shouldBe true
+        parseArguments(arrayOf("Test", "Test")).isFailure shouldBe true
     }
 
-    @Test fun `Is parseArguments not allowing non-number string`() {
-        val alphanumericArgs = arrayOf("Test")
-
-        assertTrue(parseArguments(alphanumericArgs).isFailure)
+    "Is parseArguments not allowing non-number string" {
+        parseArguments(arrayOf("Test")).isFailure shouldBe true
     }
 
-    @Test fun `Is parseArguments returning number`() {
-        val numericArgs = arrayOf("1")
-
-        assertEquals(1, parseArguments(numericArgs).getOrNull())
+    "Is parseArguments returning number" {
+        parseArguments(arrayOf("1")).getOrNull() shouldBe 1
     }
 
-    @Test fun `Is program running`() {
-        main(arrayOf("1"))
+    "Is program running" {
+        shouldNotThrowAny { main(arrayOf("1")) }
     }
 
-}
+})

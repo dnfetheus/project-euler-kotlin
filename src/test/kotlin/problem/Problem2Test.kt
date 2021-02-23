@@ -1,22 +1,27 @@
 package problem
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.data.forAll
+import io.kotest.data.row
+import io.kotest.matchers.ints.shouldBeExactly
 
-class Problem2Test : ProblemTest {
+class Problem2Test : StringSpec({
 
-    override val problem = Problem2()
+    val problem = Problem2()
 
-    @Test fun `Is fibonacciNumber accurate`() {
-        assertEquals(1, Problem2.fibonacciNumber(1))
-        assertEquals(1, Problem2.fibonacciNumber(2))
-        assertEquals(2, Problem2.fibonacciNumber(3))
-        assertEquals(13, Problem2.fibonacciNumber(7))
+    "Is fibonacciNumber accurate" {
+        forAll(
+            row(1, 1),
+            row(2, 1),
+            row(3, 2),
+            row(7, 13)
+        ) { a, b ->
+            Problem2.fibonacciNumber(a) shouldBeExactly b
+        }
     }
 
-    @Test override fun `Is problem being solved correctly`() {
-        assertEquals(4613732, problem.solve())
+    "Is problem being solved correctly" {
+        problem.solve() shouldBeExactly 4613732
     }
 
-}
+})

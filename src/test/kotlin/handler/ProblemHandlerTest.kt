@@ -1,21 +1,18 @@
 package handler
 
-import org.junit.jupiter.api.assertDoesNotThrow
-import org.junit.jupiter.api.assertThrows
-import kotlin.test.Test
+import io.kotest.assertions.throwables.shouldNotThrowAny
+import io.kotest.assertions.throwables.shouldThrowAny
+import io.kotest.core.spec.style.StringSpec
 
-class ProblemHandlerTest {
 
-    @Test fun `Is constructor handling error`() {
-        val wrongNumber: Short = 0
+class ProblemHandlerTest : StringSpec({
 
-        assertThrows<Exception> { ProblemHandler(wrongNumber) }
+    "Is constructor handling error" {
+        shouldThrowAny { ProblemHandler(0) }
     }
 
-    @Test fun `Is handler solving problem`() {
-        val rightNumber: Short = 1
-
-        assertDoesNotThrow { ProblemHandler(rightNumber).also { it.execute() } }
+    "Is handler solving problem" {
+        shouldNotThrowAny { ProblemHandler(1).execute() }
     }
 
-}
+})
