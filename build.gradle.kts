@@ -2,7 +2,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.4.30"
-    id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
+    // FIXME: Incompatible with Gradle 6.8.3
+//    id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
     id("idea")
     jacoco
     application
@@ -34,28 +35,36 @@ dependencies {
 }
 
 tasks {
+    // TODO: Pre-commit hook
+//    build {
+//        finalizedBy(addKtlintFormatGitPreCommitHook)
+//    }
+
     test {
         useJUnitPlatform()
+        finalizedBy(jacocoTestReport)
     }
 
     jacocoTestReport {
+        dependsOn(test)
         reports {
+            html.isEnabled = true
             xml.isEnabled = true
+            csv.isEnabled = false
         }
     }
 
     withType<KotlinCompile> {
         kotlinOptions {
             jvmTarget = "11"
+            useIR = true
             freeCompilerArgs = freeCompilerArgs + "-Xallow-result-return-type"
         }
     }
-
-    // TODO: Pre-commit
 }
 
 application {
-    mainClassName = "MainKt"
+    mainClass.set("MainKt")
 }
 
 idea {
