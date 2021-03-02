@@ -2,6 +2,7 @@ package extension
 
 /**
  * Returns an iterable of mapped values until condition is not met
+ * Maybe it would be more valuable if iterable is used as Sequence
  *
  * @param transform function that will be used to generate the expected value
  * @param condition function that will determine when transformation needs to be stopped
@@ -12,8 +13,8 @@ inline fun <T, R> Iterable<T>.mapWhile(transform: (T) -> R, condition: (R) -> Bo
     for (item in this) {
         val transformation = transform(item)
 
-        when (condition(transformation)) {
-            true -> destination.add(transformation)
+        when {
+            condition(transformation) -> destination.add(transformation)
             else -> break
         }
     }

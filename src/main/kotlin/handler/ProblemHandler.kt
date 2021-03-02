@@ -12,8 +12,8 @@ class ProblemHandler(number: Short) {
     private val problem: Problem<Any>
 
     init {
-        if (number !in 1..PROBLEMS.size) {
-            throw Exception("Problem doesn't exist")
+        when (number) {
+            !in 1..PROBLEMS.size -> throw Exception("Problem doesn't exist")
         }
 
         problem = PROBLEMS[number - 1].createInstance()

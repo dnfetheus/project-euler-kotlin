@@ -1,34 +1,17 @@
 package problem
 
-import extension.mapWhile
+import extension.fibonacciNumber
 
-class Problem2 : Problem<Int> {
-
-    companion object {
-        fun fibonacciNumber(n: Int): Int {
-            var a = 0
-            var b = 1
-
-            return when (n < 1) {
-                true -> a
-                else -> (2..n)
-                    .forEach { _ ->
-                        val temp = a + b
-                        a = b
-                        b = temp
-                    }
-                    .let { b }
-            }
-        }
-    }
+class Problem2 : Problem<Long> {
 
     override val problemName = "Even Fibonacci numbers"
 
-    override fun solve(): Int = (1..Int.MAX_VALUE)
-        .mapWhile(
-            { fibonacciNumber(it) },
-            { it <= 4000000 }
-        )
-        .filter { it % 2 == 0 }
+    private val limit = 4000000L
+
+    override fun solve(): Long = generateSequence(1) { it + 1 }
+        .map { it.fibonacciNumber() }
+        .takeWhile { it <= limit }
+        .filter { it % 2L == 0L }
         .sum()
+
 }

@@ -1,24 +1,31 @@
 import io.kotest.assertions.throwables.shouldNotThrowAny
-import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.shouldBe
+import io.kotest.assertions.throwables.shouldThrowAny
+import io.kotest.core.spec.style.AnnotationSpec
+import io.mockk.every
+import io.mockk.mockkStatic
 
-class MainTest : StringSpec({
+class MainTest : AnnotationSpec() {
 
-    "Is parseArguments not allowing more arguments than needed" {
-        parseArguments(emptyArray()).isFailure shouldBe true
-        parseArguments(arrayOf("Test", "Test")).isFailure shouldBe true
+    @BeforeClass
+    fun `Prepare tests`() {
+        mockkStatic("MainKt")
+        every { exitWithError() } throws Exception()
     }
 
-    "Is parseArguments not allowing non-number string" {
-        parseArguments(arrayOf("Test")).isFailure shouldBe true
+    @Test
+    fun `Is program not allowing an invalid number of arguments`() {
+        shouldThrowAny { main(emptyArray()) }
+        shouldThrowAny { main(arrayOf("1", "1")) }
     }
 
-    "Is parseArguments returning number" {
-        parseArguments(arrayOf("1")).getOrNull() shouldBe 1
+    @Test
+    fun `Is program not allowing non-number string`() {
+        shouldThrowAny { main(arrayOf("Test")) }
     }
 
-    "Is program running" {
+    @Test
+    fun `Is program running`() {
         shouldNotThrowAny { main(arrayOf("1")) }
     }
 
-})
+}
