@@ -31,10 +31,6 @@ class NumberExtensionsTest : StringSpec({
         nonPrimeNumbers.none { it.isPrime() } shouldBe true
     }
 
-    "Is nextPrime returning the next prime" {
-        (12L).nextPrime() shouldBeExactly 13L
-    }
-
     "Is primeFactors accurate" {
         (33L).primeFactors() shouldBe listOf(3L, 11L)
         (13195L).primeFactors() shouldBe listOf(5L, 7L, 13L, 29L)

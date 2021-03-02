@@ -2,82 +2,43 @@ package extension
 
 import kotlin.math.sqrt
 
-fun Number.fibonacciNumber(): Long {
-    // This (creates overhead)
-//    fun fibonacciSequence(term: Long): Long {
-//        var a = 0L
-//        var b = 1L
-//
-//        return (2L..term)
-//            .forEach { _ ->
-//                val temp = a + b
-//                a = b
-//                b = temp
-//            }
-//            .let { b }
-//    }
-
-    // Or
-
-    val fibonacciSequence = { term: Long ->
-        var a = 0L
-        var b = 1L
-
-        (2L..term)
-            .forEach { _ ->
-                val temp = a + b
-                a = b
-                b = temp
-            }
-            .let { b }
+fun Number.fibonacciNumber(): Long = (2L until this.toLong())
+    .fold(1L to 1L) { (prev, curr), _ ->
+        curr to (prev + curr)
     }
-
-    val longValue = this.toLong()
-
-    return when {
-        longValue < 1 -> 0
-        else -> fibonacciSequence(longValue)
-    }
-}
+    .second
 
 fun Number.primeFactors(): List<Long> {
-    val longValue = this.toLong()
+    tailrec fun findNextPrimeFactor(value: Long, factor: Long): Long = when {
+        value % factor != 0L -> findNextPrimeFactor(value, factor.nextPrime())
+        else -> factor
+    }
 
-    val findPrimeFactors = { number: Long ->
+    val findPrimeFactors = { value: Long ->
         val factors = mutableListOf<Long>()
-        var factor = 2L
-        var temp = number
+        var temp = value
 
         while (temp != 1L) {
-            while (temp % factor != 0L) {
-                factor = factor.nextPrime()
+            findNextPrimeFactor(temp, factors.lastOrNull() ?: 2L).let {
+                factors.add(it)
             }
-
-            factors.add(factor)
-            temp /= factor
+            temp /= factors.last()
         }
 
         factors
     }
 
-    return when {
-        isPrime() -> listOf(longValue)
-        else -> findPrimeFactors(longValue)
+    return this.toLong().let {
+        when {
+            it.isPrime() -> listOf(it)
+            else -> findPrimeFactors(it)
+        }
     }
 }
 
-fun Number.nextPrime(): Long {
-    val longValue = this.toLong()
-
-    return generateSequence(longValue + 1L) { it + 1L }
-        .find { it.isPrime() }!!
+fun Number.nextPrime(): Long = this.toLong().let { longValue ->
+    generateSequence(longValue + 1L) { it + 1L }.find { it.isPrime() }!!
 }
 
-fun Number.isPrime(): Boolean {
-    val longValue = this.toLong()
-    val squareOfValue = sqrt(this.toDouble()).toLong()
-
-    return (2L..squareOfValue)
-        .none { longValue % it == 0L }
-}
-
+fun Number.isPrime(): Boolean = (this.toLong() to sqrt(this.toDouble()).toLong())
+    .let { pair -> (2L..pair.second).none { pair.first % it == 0L } }

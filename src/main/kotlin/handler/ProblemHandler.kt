@@ -14,9 +14,8 @@ class ProblemHandler(number: Short) {
     init {
         when (number) {
             !in 1..PROBLEMS.size -> throw Exception("Problem doesn't exist")
+            else -> problem = PROBLEMS.last().createInstance()
         }
-
-        problem = PROBLEMS[number - 1].createInstance()
     }
 
     fun execute() {
