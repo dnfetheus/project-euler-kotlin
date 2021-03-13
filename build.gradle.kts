@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.4.30"
+    kotlin("jvm") version "1.4.31"
     // FIXME: Incompatible with Gradle 6.8.3
 //    id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
     id("idea")

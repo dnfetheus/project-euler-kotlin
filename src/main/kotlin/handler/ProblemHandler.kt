@@ -13,8 +13,8 @@ class ProblemHandler(number: Short) {
 
     init {
         when (number) {
-            !in 1..PROBLEMS.size -> throw Exception("Problem doesn't exist")
-            else -> problem = PROBLEMS.last().createInstance()
+            in 1..PROBLEMS.size -> problem = PROBLEMS.last().createInstance()
+            else -> throw Exception("Problem doesn't exist")
         }
     }
 
