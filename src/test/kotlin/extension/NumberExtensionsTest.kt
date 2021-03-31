@@ -5,7 +5,6 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.longs.shouldBeExactly
 import io.kotest.matchers.shouldBe
-import problem.Problem3
 
 class NumberExtensionsTest : StringSpec({
 

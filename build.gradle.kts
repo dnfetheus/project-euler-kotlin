@@ -2,8 +2,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.4.31"
-    // FIXME: Incompatible with Gradle 6.8.3
-//    id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
     id("idea")
     jacoco
     application
@@ -20,6 +18,8 @@ dependencies {
     val log4jVersion = "2.14.0"
     val kotestVersion = "4.4.1"
 
+    implementation(kotlin("reflect"))
+
     implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
     implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
     implementation("org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion")
@@ -30,15 +30,12 @@ dependencies {
     testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
     testImplementation("io.kotest:kotest-property:$kotestVersion")
     testImplementation("io.mockk:mockk:1.10.6")
-
-    implementation(kotlin("reflect"))
 }
 
 tasks {
-    // TODO: Pre-commit hook
-//    build {
-//        finalizedBy(addKtlintFormatGitPreCommitHook)
-//    }
+    check {
+        dependsOn(jacocoTestCoverageVerification)
+    }
 
     test {
         useJUnitPlatform()
@@ -46,11 +43,23 @@ tasks {
     }
 
     jacocoTestReport {
-        dependsOn(test)
+//        dependsOn(test)
         reports {
             html.isEnabled = true
             xml.isEnabled = true
             csv.isEnabled = false
+        }
+    }
+
+    jacocoTestCoverageVerification {
+        violationRules {
+            rule {
+                limit {
+                    counter = "INSTRUCTION"
+                    value = "COVEREDRATIO"
+                    minimum = BigDecimal("0.8")
+                }
+            }
         }
     }
 
@@ -63,13 +72,9 @@ tasks {
     }
 }
 
-application {
-    mainClass.set("MainKt")
-}
+application.mainClass.set("MainKt")
 
-idea {
-    module {
-        isDownloadJavadoc = true
-        isDownloadSources = true
-    }
+idea.module {
+    isDownloadJavadoc = true
+    isDownloadSources = true
 }
