@@ -1,6 +1,5 @@
 package handler
 
-import constant.PROBLEMS
 import mu.KotlinLogging
 import problem.Problem
 import kotlin.reflect.full.createInstance
@@ -12,10 +11,9 @@ class ProblemHandler(number: Short) {
     private val problem: Problem<Any>
 
     init {
-        when (number) {
-            in 1..PROBLEMS.size -> problem = PROBLEMS.last().createInstance()
-            else -> throw Exception("Problem doesn't exist")
-        }
+        val result = runCatching { Class.forName("problem.Problem$number") }
+        val clazz = result.getOrElse { throw IllegalArgumentException("Problem doesnt't exist") }
+        problem = clazz.kotlin.createInstance() as Problem<Any>
     }
 
     fun execute() {
