@@ -12,5 +12,9 @@ fun Number.nextPrime(): Long = this.toLong().let { longValue ->
     generateSequence(longValue + 1L) { it + 1L }.find { it.isPrime() }!!
 }
 
-fun Number.isPrime(): Boolean = (this.toLong() to sqrt(this.toDouble()).toLong())
-    .let { pair -> (2L..pair.second).none { pair.first % it == 0L } }
+fun Number.isPrime(): Boolean {
+    val longValue = this.toLong()
+    val sqrt = sqrt(this.toDouble()).toLong()
+
+    return (2L..sqrt).none { longValue % it == 0L }
+}
