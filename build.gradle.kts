@@ -1,13 +1,13 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.4.31"
+    kotlin("jvm") version "1.4.32"
     id("idea")
     jacoco
     application
 }
 
-group = "me.dnfetheus"
+group = "xyz.dnfetheus"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -15,8 +15,8 @@ repositories {
 }
 
 dependencies {
-    val log4jVersion = "2.14.0"
-    val kotestVersion = "4.4.1"
+    val log4jVersion = "2.14.1"
+    val kotestVersion = "4.4.3"
 
     implementation(kotlin("reflect"))
 
@@ -24,12 +24,12 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
     implementation("org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion")
     implementation("org.slf4j:slf4j-api:1.7.30")
-    implementation("io.github.microutils:kotlin-logging:2.0.4")
+    implementation("io.github.microutils:kotlin-logging:2.0.6")
 
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
     testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
     testImplementation("io.kotest:kotest-property:$kotestVersion")
-    testImplementation("io.mockk:mockk:1.10.6")
+    testImplementation("io.mockk:mockk:1.11.0")
 }
 
 tasks {
@@ -43,7 +43,7 @@ tasks {
     }
 
     jacocoTestReport {
-//        dependsOn(test)
+        dependsOn(test)
         reports {
             html.isEnabled = true
             xml.isEnabled = true
@@ -57,7 +57,7 @@ tasks {
                 limit {
                     counter = "INSTRUCTION"
                     value = "COVEREDRATIO"
-                    minimum = BigDecimal("0.8")
+                    minimum = BigDecimal("0.9")
                 }
             }
         }
